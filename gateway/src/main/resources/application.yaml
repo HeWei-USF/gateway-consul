@@ -1,5 +1,7 @@
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 2000
+
 server:
-  port: 9090
+  port: 9091
 spring:
   application:
     name: gateway
@@ -20,6 +22,10 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/(?<path>.*), /$\{path}
+            - name: Hystrix
+              args:
+                name: hystrix1
+                fallbackUri: forward:/service1/fallback
 
 management:
   endpoint:
